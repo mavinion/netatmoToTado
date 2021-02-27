@@ -1,0 +1,43 @@
+
+plugins {
+    id "java"
+    id "application"
+    id "idea"
+}
+
+group 'net.rulerz'
+version '1.0-SNAPSHOT'
+
+compileJava {
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+}
+
+application {
+    mainClassName = 'net.rulerz.netatmoToTado.App'
+}
+
+jar {
+    manifest {
+        attributes "Main-Class": "net.rulerz.netatmoToTado.App"
+    }
+
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.losty.netatmo:netatmo-api:0.6.0'
+    implementation 'com.google.code.gson:gson:2.8.6'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+test {
+    useJUnitPlatform()
+}
